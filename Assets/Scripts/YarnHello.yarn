@@ -1,0 +1,383 @@
+﻿//This game uses Yarn Spinner and Unity to create a visual novel game called "People Watching"
+//Thank you to Camille and Bec @LevelHerUp for assisting with YarnSpinner and Unity. Couldn't have done this without you.
+//Created in the 2023 game jam. Tidied up post-jam
+
+
+//INTRO COMMENTS FROM THE DEV:
+//Yarn Spinner is used as an extension in Unity. See their documentation in how to set this up.
+//Each 'node' is like a script portion.
+//The <<jump to 'x-title'>> allows you to move from one node to another
+//There is a way to use this in VS-Code with a visual representation with boxes and arrows, but it was not used in the game jam to create less moving parts which could break/have issues. 
+
+//The <<IncreaseGood ScoreTracker>> and <<IncreaseBadScoreTracker>> were created as 'yarn commands' in Unity so they could trigger the action of the score increase. 
+//The <<IncreaseX ScoreTracker>> was placed after the dialogue was confirmed and displayed on screen as there didn't appear to be a way to stack <<two>> <<commands>> <<after>> <<eachother>> 
+
+///beginning of dialogue
+
+title: Start
+---
+Narrator: It’s a cold winter morning and all the animals of Caffeineville are looking for their morning fix. There are those who thought that an interspecies society, herbivores roaming the same streets as carnivores, was an impossibility. Yet the world of Caffeineville is largely peaceful. Most days...
+Narrator: You enter Moooodswing Cafe, in a hurry to grab your morning coffee and get to work  at the mowing company with your fellow sheep. You stand in line, tapping your feet as you watch the customer in front of you, a well-groomed cat, begin to chat with the barista, an eccentric looking cow.  
+Narrator: As their voices begin to raise, you check your watch.
+Cow: Hello, how can I help you?
+Cat: One latte in a kitty bowl, please.
+Cow: ...
+
+-> Cow: Would you prefer a free upgrade to oat milk?
+ <<jump MilkChoicePos>>
+-> Cow: Don’t you think it’s a little weird to drink another animal’s milk? Wouldn’t you prefer an alternative?
+   <<jump MilkChoiceNeg>>
+
+===
+
+title: MilkChoicePos
+---
+Cow: Would you prefer a free upgrade to oat milk?
+Cat: ...
+<<IncreaseGood ScoreTracker>>
+
+-> Cat: Uh, no thank you, just cow’s milk.
+    <<jump CatMilkResponsePos>>
+-> Cat: Why don’t you mind your own business and do your job?
+    <<jump CatMilkResponseNeg>>
+===
+
+title: MilkChoiceNeg
+---
+Cow: Don’t you think it’s a little weird to drink another animal’s milk? Wouldn’t you prefer an alternative?
+Cat: ...
+<<IncreaseBad ScoreTracker>>
+
+-> Cat: Uh, no thank you, just cow’s milk.
+    <<jump CatMilkResponsePos>>
+-> Cat: Why don’t you mind your own business and do your job?
+    <<jump CatMilkResponseNeg>>
+===
+
+
+title: CatMilkResponsePos
+---
+Cat: Uh, no thank you, just cow’s milk.
+Cow: ...
+<<IncreaseGood ScoreTracker>>
+
+-> Cow: I get that milk is delicious, but have you considered the impact it has on cows?
+    <<jump CowMilkBusinessPos>>
+-> Cow: Um, look at me. I’m a cow. These are my udders. My milk is my business.
+    <<jump CowMilkBusinessNeg>>
+===
+
+title: CatMilkResponseNeg
+---
+Cat: Why don’t you mind your own business and do your job?
+Cow: ...
+<<IncreaseBad ScoreTracker>>
+
+
+-> Cow: I get that milk is delicious, but have you considered the impact it has on cows?
+    <<jump CowMilkBusinessPos>>
+-> Cow: Um, look at me. I’m a cow. These are my udders. My milk is my business.
+    <<jump CowMilkBusinessNeg>>
+===
+
+
+title: CowMilkBusinessPos
+---
+Cow: I get that milk is delicious, but have you considered the impact it has on cows?
+Cat: ...
+<<IncreaseGood ScoreTracker>>
+
+
+-> Cat: Sounds like you have strong feelings on the topic. Let’s just agree to disagree. One Latte, please
+    <<jump CatFeelingPos>>
+-> Cat: If the cows are unhappy being milked, they can just get another job. Not my problem, lady.
+    <<jump CatFeelingNeg>>
+===
+
+title: CowMilkBusinessNeg
+---
+Cow: Um, look at me. I’m a cow. These are my udders. My milk is my business.
+Cat: ...
+<<IncreaseBad ScoreTracker>>
+
+-> Cat: Sounds like you have strong feelings on the topic. Let’s just agree to disagree. One latte, please
+    <<jump CatFeelingPos>>
+-> Cat: If the cows are unhappy being milked, they can just get another job. Not my problem, lady.
+    <<jump CatFeelingNeg>>
+===
+
+title: CatFeelingPos
+---
+Cat: Sounds like you have strong feelings on the topic. Let’s just agree to disagree. One latte, please
+Cow: ...
+<<IncreaseGood ScoreTracker>>
+-> Cow: Try looking at it from my perspective.
+    <<jump CowPerspectivePos>>
+-> Cow: It’s people like you that make the world a worse place.
+    <<jump CowPerspectiveNeg>>
+===
+
+title: CatFeelingNeg
+---
+Cat: If the cows are unhappy being milked, they can just get another job. Not my problem, lady.
+Cow: ...
+<<IncreaseBad ScoreTracker>>
+
+-> Cow: Try looking at it from my perspective.
+    <<jump CowPerspectivePos>>
+-> Cow: It’s people like you that make the world a worse place.
+    <<jump CowPerspectiveNeg>>
+===
+
+title: CowPerspectivePos
+---
+Cow: Try looking at it from my perspective.
+Cat: ...
+<<IncreaseGood ScoreTracker>>
+
+-> Cat: But I need my morning milk to start my day prrrrfectly.
+    <<jump CatSassPos>>
+-> Cat: I’m sorry, but are you diseased? Because you’re acting like a mad cow.
+    <<jump CatSassNeg>>
+===
+
+title: CowPerspectiveNeg
+---
+Cow: Try looking at it from my perspective.
+Cat: ...
+<<IncreaseBad ScoreTracker>>
+-> Cat: But I need my morning milk to start my day prrrrfectly.
+ <<jump CatSassPos>>
+-> Cat: I’m sorry, but are you diseased? Because you’re acting like a mad cow.
+    <<jump CatSassNeg>>
+===
+
+title: CatSassPos
+---
+Cat: But I need my morning milk to start my day prrrrfectly.
+Cow: ...
+<<IncreaseGood ScoreTracker>>
+->Cow: I understand that it can be hard to break old habits.
+    <<jump CowSlurPos>>
+->Cow: God, friggin’ carnivores.
+    <<jump CowSlurNeg>>
+===
+
+title: CatSassNeg
+---
+Cat: I’m sorry, but are you diseased? Because you’re acting like a mad cow.
+Cow: ...
+<<IncreaseBad ScoreTracker>>
+->Cow: I understand that it can be hard to break old habits.
+    <<jump CowSlurPos>>
+->Cow: God, friggin’ carnivores.
+    <<jump CowSlurNeg>>
+===
+
+title: CowSlurPos
+---
+Cow: I understand that it can be hard to break old habits.
+Cat: ...
+<<IncreaseGood ScoreTracker>>
+
+-> Cat: I’m sorry, but I’m going to be late for work. Is there someone else I can order from?
+    <<jump CatWitsEndPos>>
+-> Cat: That’s it, I want to speak to your manager.
+    <<jump CatWitsEndNeg>>
+===
+
+title: CowSlurNeg
+---
+Cow: God, friggin’ carnivores.
+Cat: ...
+<<IncreaseBad ScoreTracker>>
+
+-> Cat: I’m sorry, but I’m going to be late for work. Is there someone else I can order from?
+    <<jump CatWitsEndPos>>
+-> Cat: That’s it, I want to speak to your manager.
+    <<jump CatWitsEndNeg>>
+===
+
+title: CatWitsEndPos
+---
+Cat: I’m sorry, but I’m going to be late for work. Is there someone else I can order from?
+Cow: ...
+<<IncreaseGood ScoreTracker>>
+-> Cow: I’m the manager of this establishment.
+    <<jump CowBossPos>>
+-> Cow: Guess what? This whole cafe belongs to me, so if you don’t like it, you can leave.
+     <<jump CowBossNeg>>
+===
+
+title: CatWitsEndNeg
+---
+Cat: That’s it, I want to speak to your manager.
+Cow: ...
+<<IncreaseBad ScoreTracker>>
+-> Cow: I’m the manager of this establishment.
+     <<jump CowBossPos>>
+-> Cow: Guess what? This whole cafe belongs to me, so if you don’t like it, you can leave.
+    <<jump CowBossNeg>>
+===
+
+title: CowBossPos
+---
+Cow: I’m the manager of this establishment.
+Cat: ...
+<<IncreaseGood ScoreTracker>>
+
+-> Cat: I just don’t want oat milk. I desire a creamier alternative.
+    <<jump CatFedUpPos>>
+-> Cat: That’s it. I’m out of here.
+     <<jump CatFedUpNeg>>
+===
+
+title: CowBossNeg
+---
+Cow: Guess what? This whole cafe belongs to me, so if you don’t like it, you can leave.
+Cat: ...
+<<IncreaseBad ScoreTracker>>
+
+-> Cat: I just don’t want oat milk. I desire a creamier alternative.
+    <<jump CatFedUpPos>>
+-> Cat: That’s it. I’m out of here.
+    <<jump CatFedUpNeg>>
+===
+
+title: CatFedUpPos
+---
+Cat: I just don’t want oat milk. I desire a creamier alternative. 
+Cow: ...
+<<IncreaseGood ScoreTracker>>
+
+-> Cow: Wait, hold on. It looks like a new order of milk alternative from one of our more...boutique vendors has just come in. Would you be willing to try something completely new? First one’s on the house. 
+    <<jump CowChoicePos>>
+-> Cow: Hold on. A new milk alternative just came in. You seem like a cheap cat, why don’t you just try it for free. It won’t kill you.
+    <<jump CowChoiceNeg>>
+===
+
+title: CatFedUpNeg
+---
+Cat: That’s it. I’m out of here.
+Cow: ...
+<<IncreaseBad ScoreTracker>>
+
+-> Cow: Wait, hold on. It looks like a new order of milk alternative from one of our more...boutique vendors has just come in. Would you be willing to try something completely new? First one’s on the house. 
+    <<jump CowChoicePos>>
+-> Cow: Hold on. A new milk alternative just came in. You seem like a cheap cat, why don’t you just try it for free. It won’t kill you. 
+    <<jump CowChoiceNeg>>
+===
+
+title: CowChoicePos
+---
+Cow: Wait, hold on. It looks like a new order of milk alternative from one of our more...boutique vendors has just come in. Would you be willing to try something completely new? First one’s on the house.
+Cat: ...
+<<IncreaseGood ScoreTracker>>
+
+-> Cat: Free? You know what, why the hell not?
+    <<jump CatDrankPos>>
+-> Cat: Right, like I’d trust anything you would serve me. You’d probably spit in it.
+    <<jump CatDrankNeg>>
+===
+
+title: CowChoiceNeg
+---
+Cow: Hold on. A new milk alternative just came in. You seem like a cheap cat, why don’t you just try it for free. It won’t kill you.
+Cat: ...
+<<IncreaseBad ScoreTracker>>
+-> Cat: Free? You know what, why the hell not?
+    <<jump CatDrankPos>>
+-> Cat: Right, like I’d trust anything you would serve me. You’d probably spit in it.
+    <<jump CatDrankNeg>>
+===
+
+title: CatDrankPos
+---
+Cat: Free? You know what, why the hell not?
+Cow:...
+<<IncreaseGood ScoreTracker>>
+-> Cow: Here’s your cat-milk latte. Please enjoy.
+    <<jump CowDrankPos>>
+-> Cow: Welp. This interaction has taught me that I hate ALL cats.
+    <<jump CowDrankNeg>>
+===
+
+title: CatDrankNeg
+---
+Cat: Right, like I’d trust anything you would serve me. You’d probably spit in it.
+Cow:...
+<<IncreaseBad ScoreTracker>>
+-> Cow: Here’s your cat-milk latte. Please enjoy.
+    <<jump CowDrankPos>>
+-> Cow: Welp. This interaction has taught me that I hate ALL cats.
+    <<jump CowDrankNeg>>
+===
+
+title: CowDrankPos
+---
+Cow: Here’s your cat-milk latte. Please enjoy.
+Cat: ...
+<<IncreaseGood ScoreTracker>>
+
+-> Cat: Mmmh. Reminds me of childhood.
+ <<CalculateScore ScoreTracker>>
+-> Cat: Welp. This interaction has taught me that I hate ALL cows.
+   <<CalculateScore ScoreTracker>>
+
+//if statement for going to good ending if good score higher than x
+//else statement go to bad score
+
+===
+
+title: CowDrankNeg
+---
+Cow: Welp. This interaction has taught me that I hate ALL cats.
+Cat: ...
+<<IncreaseBad ScoreTracker>>
+
+-> Cat: Mmmh. Reminds me of childhood.
+ <<CalculateScore ScoreTracker>>
+-> Cat: Welp. This interaction has taught me that I hate ALL cows.
+
+//To calculate the overall score:
+<<CalculateScore ScoreTracker>>
+
+//if statement for going to good ending if good score higher than x
+//else statement go to bad score
+===
+
+
+//NOTE THIS CODE BELOW WASN'T USED IN THE END AS IT MADE MORE SENSE TO DO THIS IN UNITY RATHER THAN YARN: end states for ending
+//SEE SCORETRACKER.CS SCRIPT TO SEE HOW THIS WORKED
+
+//title: DoneGood
+//---
+//Narrator: You are an empathetic understanding person. You make the world a better place
+//<<jump Score>>
+//===
+
+//title: DoneBad
+//---
+//Narrator: You are on the pathway to world domination. Lesser mortals bow before you as you rule the Bad Place.
+//<<jump Score>>
+//===
+
+//title: Score
+//---
+//To calculate the overall score:
+//<<CalculateScore ScoreTracker>>
+//===
+
+
+//HERE IS SOME PSEUDOCODE IDEAS I WROTE TO THINK ABOUT THE LOGIC/VARIABLES. THESE ARE NOT USED IN THE GAME. 
+
+///the variable to track positive
+///<<declare $good = 0>>
+
+///the variable to track negative
+///<<declare $bad = 0>>
+///ending variable
+/// <<if $good = 10>>
+/// <<jump DoneGood>>
+/// <<if $bad = 10>>
+/// <<jump DoneBad>>
