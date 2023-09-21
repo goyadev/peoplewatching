@@ -1,6 +1,6 @@
 ﻿//This game uses Yarn Spinner and Unity to create a visual novel game called "People Watching"
 //Thank you to Camille and Bec @LevelHerUp for assisting with YarnSpinner and Unity. Couldn't have done this without you.
-//Created in the 2023 game jam. Tidied up post-jam
+//Created in the 2023 game jam. Tidied up post-jam with some extra support from Mikey <3 
 
 
 //INTRO COMMENTS FROM THE DEV:
@@ -11,10 +11,13 @@
 
 //The <<IncreaseGood ScoreTracker>> and <<IncreaseBadScoreTracker>> were created as 'yarn commands' in Unity so they could trigger the action of the score increase. 
 //The <<IncreaseX ScoreTracker>> was placed after the dialogue was confirmed and displayed on screen as there didn't appear to be a way to stack <<two>> <<commands>> <<after>> <<eachother>> 
+// The <<playContinue GameObject>> allowed the sound to trigger on the dialogue choices. 
+// Due to Yarn Dloague System being in 'prefab' in meant I was unable to edit the Options List View to put a sound on. 
 
 ///beginning of dialogue
 
 title: Start
+position: 232,214
 ---
 Narrator: It’s a cold winter morning and all the animals of Caffeineville are looking for their morning fix. There are those who thought that an interspecies society, herbivores roaming the same streets as carnivores, was an impossibility. Yet the world of Caffeineville is largely peaceful. Most days...
 Narrator: You enter Moooodswing Cafe, in a hurry to grab your morning coffee and get to work  at the mowing company with your fellow sheep. You stand in line, tapping your feet as you watch the customer in front of you, a well-groomed cat, begin to chat with the barista, an eccentric looking cow.  
@@ -24,50 +27,61 @@ Cat: One latte in a kitty bowl, please.
 Cow: ...
 
 -> Cow: Would you prefer a free upgrade to oat milk?
+ <<playContinue DialogueListViewSound>>
  <<jump MilkChoicePos>>
 -> Cow: Don’t you think it’s a little weird to drink another animal’s milk? Wouldn’t you prefer an alternative?
-   <<jump MilkChoiceNeg>>
-
+ <<playContinue DialogueListViewSound>>
+ <<jump MilkChoiceNeg>>
 ===
 
 title: MilkChoicePos
+position: 293,587
 ---
 Cow: Would you prefer a free upgrade to oat milk?
 Cat: ...
 <<IncreaseGood ScoreTracker>>
 
 -> Cat: Uh, no thank you, just cow’s milk.
-    <<jump CatMilkResponsePos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatMilkResponsePos>>
 -> Cat: Why don’t you mind your own business and do your job?
-    <<jump CatMilkResponseNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatMilkResponseNeg>>
 ===
 
 title: MilkChoiceNeg
+position: 677,482
 ---
 Cow: Don’t you think it’s a little weird to drink another animal’s milk? Wouldn’t you prefer an alternative?
 Cat: ...
 <<IncreaseBad ScoreTracker>>
 
 -> Cat: Uh, no thank you, just cow’s milk.
-    <<jump CatMilkResponsePos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatMilkResponsePos>>
 -> Cat: Why don’t you mind your own business and do your job?
-    <<jump CatMilkResponseNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatMilkResponseNeg>>
 ===
 
 
 title: CatMilkResponsePos
+position: 586,797
 ---
 Cat: Uh, no thank you, just cow’s milk.
 Cow: ...
 <<IncreaseGood ScoreTracker>>
 
 -> Cow: I get that milk is delicious, but have you considered the impact it has on cows?
+ <<playContinue DialogueListViewSound>>
     <<jump CowMilkBusinessPos>>
 -> Cow: Um, look at me. I’m a cow. These are my udders. My milk is my business.
+ <<playContinue DialogueListViewSound>>
     <<jump CowMilkBusinessNeg>>
 ===
 
 title: CatMilkResponseNeg
+position: 887,711
 ---
 Cat: Why don’t you mind your own business and do your job?
 Cow: ...
@@ -75,13 +89,16 @@ Cow: ...
 
 
 -> Cow: I get that milk is delicious, but have you considered the impact it has on cows?
-    <<jump CowMilkBusinessPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowMilkBusinessPos>>
 -> Cow: Um, look at me. I’m a cow. These are my udders. My milk is my business.
-    <<jump CowMilkBusinessNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowMilkBusinessNeg>>
 ===
 
 
 title: CowMilkBusinessPos
+position: 1007,972
 ---
 Cow: I get that milk is delicious, but have you considered the impact it has on cows?
 Cat: ...
@@ -89,240 +106,303 @@ Cat: ...
 
 
 -> Cat: Sounds like you have strong feelings on the topic. Let’s just agree to disagree. One Latte, please
+    <<playContinue DialogueListViewSound>>
     <<jump CatFeelingPos>>
 -> Cat: If the cows are unhappy being milked, they can just get another job. Not my problem, lady.
-    <<jump CatFeelingNeg>>
+     <<playContinue DialogueListViewSound>>
+     <<jump CatFeelingNeg>>
 ===
 
 title: CowMilkBusinessNeg
+position: 1319,966
 ---
 Cow: Um, look at me. I’m a cow. These are my udders. My milk is my business.
 Cat: ...
 <<IncreaseBad ScoreTracker>>
 
 -> Cat: Sounds like you have strong feelings on the topic. Let’s just agree to disagree. One latte, please
-    <<jump CatFeelingPos>>
+     <<playContinue DialogueListViewSound>>
+     <<jump CatFeelingPos>>
 -> Cat: If the cows are unhappy being milked, they can just get another job. Not my problem, lady.
-    <<jump CatFeelingNeg>>
+     <<playContinue DialogueListViewSound>>
+     <<jump CatFeelingNeg>>
 ===
 
 title: CatFeelingPos
+position: 1073,1263
 ---
 Cat: Sounds like you have strong feelings on the topic. Let’s just agree to disagree. One latte, please
 Cow: ...
 <<IncreaseGood ScoreTracker>>
 -> Cow: Try looking at it from my perspective.
-    <<jump CowPerspectivePos>>
+     <<playContinue DialogueListViewSound>>
+     <<jump CowPerspectivePos>>
 -> Cow: It’s people like you that make the world a worse place.
-    <<jump CowPerspectiveNeg>>
+     <<playContinue DialogueListViewSound>>
+     <<jump CowPerspectiveNeg>>
 ===
 
 title: CatFeelingNeg
+position: 1589,1214
 ---
 Cat: If the cows are unhappy being milked, they can just get another job. Not my problem, lady.
 Cow: ...
 <<IncreaseBad ScoreTracker>>
 
 -> Cow: Try looking at it from my perspective.
+    <<playContinue DialogueListViewSound>>
     <<jump CowPerspectivePos>>
 -> Cow: It’s people like you that make the world a worse place.
-    <<jump CowPerspectiveNeg>>
+     <<playContinue DialogueListViewSound>>
+     <<jump CowPerspectiveNeg>>
 ===
 
 title: CowPerspectivePos
+position: 1284,1520
 ---
 Cow: Try looking at it from my perspective.
 Cat: ...
 <<IncreaseGood ScoreTracker>>
 
 -> Cat: But I need my morning milk to start my day prrrrfectly.
+    <<playContinue DialogueListViewSound>>
     <<jump CatSassPos>>
 -> Cat: I’m sorry, but are you diseased? Because you’re acting like a mad cow.
+    <<playContinue DialogueListViewSound>>
     <<jump CatSassNeg>>
 ===
 
 title: CowPerspectiveNeg
+position: 1718,1441
 ---
 Cow: Try looking at it from my perspective.
 Cat: ...
 <<IncreaseBad ScoreTracker>>
 -> Cat: But I need my morning milk to start my day prrrrfectly.
- <<jump CatSassPos>>
+  <<playContinue DialogueListViewSound>>
+  <<jump CatSassPos>>
 -> Cat: I’m sorry, but are you diseased? Because you’re acting like a mad cow.
+    <<playContinue DialogueListViewSound>>
     <<jump CatSassNeg>>
 ===
 
 title: CatSassPos
+position: 1518,1758
 ---
 Cat: But I need my morning milk to start my day prrrrfectly.
 Cow: ...
 <<IncreaseGood ScoreTracker>>
 ->Cow: I understand that it can be hard to break old habits.
-    <<jump CowSlurPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowSlurPos>>
 ->Cow: God, friggin’ carnivores.
-    <<jump CowSlurNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowSlurNeg>>
 ===
 
 title: CatSassNeg
+position: 1899,1647
 ---
 Cat: I’m sorry, but are you diseased? Because you’re acting like a mad cow.
 Cow: ...
 <<IncreaseBad ScoreTracker>>
 ->Cow: I understand that it can be hard to break old habits.
-    <<jump CowSlurPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowSlurPos>>
 ->Cow: God, friggin’ carnivores.
-    <<jump CowSlurNeg>>
+ <<playContinue DialogueListViewSound>>   
+ <<jump CowSlurNeg>>
 ===
 
 title: CowSlurPos
+position: 1875,1980
 ---
 Cow: I understand that it can be hard to break old habits.
 Cat: ...
 <<IncreaseGood ScoreTracker>>
 
 -> Cat: I’m sorry, but I’m going to be late for work. Is there someone else I can order from?
-    <<jump CatWitsEndPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatWitsEndPos>>
 -> Cat: That’s it, I want to speak to your manager.
-    <<jump CatWitsEndNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatWitsEndNeg>>
 ===
 
 title: CowSlurNeg
+position: 2120,1893
 ---
 Cow: God, friggin’ carnivores.
 Cat: ...
 <<IncreaseBad ScoreTracker>>
 
 -> Cat: I’m sorry, but I’m going to be late for work. Is there someone else I can order from?
-    <<jump CatWitsEndPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatWitsEndPos>>
 -> Cat: That’s it, I want to speak to your manager.
-    <<jump CatWitsEndNeg>>
+ <<playContinue DialogueListViewSound>>    
+ <<jump CatWitsEndNeg>>
 ===
 
 title: CatWitsEndPos
+position: 2441,2056
 ---
 Cat: I’m sorry, but I’m going to be late for work. Is there someone else I can order from?
 Cow: ...
 <<IncreaseGood ScoreTracker>>
 -> Cow: I’m the manager of this establishment.
-    <<jump CowBossPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowBossPos>>
 -> Cow: Guess what? This whole cafe belongs to me, so if you don’t like it, you can leave.
-     <<jump CowBossNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowBossNeg>>
 ===
 
 title: CatWitsEndNeg
+position: 2152,2186
 ---
 Cat: That’s it, I want to speak to your manager.
 Cow: ...
 <<IncreaseBad ScoreTracker>>
+
 -> Cow: I’m the manager of this establishment.
-     <<jump CowBossPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowBossPos>>
 -> Cow: Guess what? This whole cafe belongs to me, so if you don’t like it, you can leave.
-    <<jump CowBossNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowBossNeg>>
 ===
 
 title: CowBossPos
+position: 2329,2412
 ---
 Cow: I’m the manager of this establishment.
 Cat: ...
 <<IncreaseGood ScoreTracker>>
 
 -> Cat: I just don’t want oat milk. I desire a creamier alternative.
-    <<jump CatFedUpPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatFedUpPos>>
 -> Cat: That’s it. I’m out of here.
-     <<jump CatFedUpNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatFedUpNeg>>
 ===
 
 title: CowBossNeg
+position: 2649,2278
 ---
 Cow: Guess what? This whole cafe belongs to me, so if you don’t like it, you can leave.
 Cat: ...
 <<IncreaseBad ScoreTracker>>
 
 -> Cat: I just don’t want oat milk. I desire a creamier alternative.
-    <<jump CatFedUpPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatFedUpPos>>
 -> Cat: That’s it. I’m out of here.
-    <<jump CatFedUpNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatFedUpNeg>>
 ===
 
 title: CatFedUpPos
+position: 2595,2619
 ---
 Cat: I just don’t want oat milk. I desire a creamier alternative. 
 Cow: ...
 <<IncreaseGood ScoreTracker>>
 
 -> Cow: Wait, hold on. It looks like a new order of milk alternative from one of our more...boutique vendors has just come in. Would you be willing to try something completely new? First one’s on the house. 
-    <<jump CowChoicePos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowChoicePos>>
 -> Cow: Hold on. A new milk alternative just came in. You seem like a cheap cat, why don’t you just try it for free. It won’t kill you.
-    <<jump CowChoiceNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowChoiceNeg>>
 ===
 
 title: CatFedUpNeg
+position: 2851,2502
 ---
 Cat: That’s it. I’m out of here.
 Cow: ...
 <<IncreaseBad ScoreTracker>>
 
 -> Cow: Wait, hold on. It looks like a new order of milk alternative from one of our more...boutique vendors has just come in. Would you be willing to try something completely new? First one’s on the house. 
-    <<jump CowChoicePos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowChoicePos>>
 -> Cow: Hold on. A new milk alternative just came in. You seem like a cheap cat, why don’t you just try it for free. It won’t kill you. 
-    <<jump CowChoiceNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowChoiceNeg>>
 ===
 
 title: CowChoicePos
+position: 2847,2807
 ---
 Cow: Wait, hold on. It looks like a new order of milk alternative from one of our more...boutique vendors has just come in. Would you be willing to try something completely new? First one’s on the house.
 Cat: ...
 <<IncreaseGood ScoreTracker>>
 
 -> Cat: Free? You know what, why the hell not?
-    <<jump CatDrankPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatDrankPos>>
 -> Cat: Right, like I’d trust anything you would serve me. You’d probably spit in it.
-    <<jump CatDrankNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatDrankNeg>>
 ===
 
 title: CowChoiceNeg
+position: 3096,2712
 ---
 Cow: Hold on. A new milk alternative just came in. You seem like a cheap cat, why don’t you just try it for free. It won’t kill you.
 Cat: ...
 <<IncreaseBad ScoreTracker>>
 -> Cat: Free? You know what, why the hell not?
-    <<jump CatDrankPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatDrankPos>>
 -> Cat: Right, like I’d trust anything you would serve me. You’d probably spit in it.
-    <<jump CatDrankNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CatDrankNeg>>
 ===
 
 title: CatDrankPos
+position: 3271,2880
 ---
 Cat: Free? You know what, why the hell not?
 Cow:...
 <<IncreaseGood ScoreTracker>>
 -> Cow: Here’s your cat-milk latte. Please enjoy.
-    <<jump CowDrankPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowDrankPos>>
 -> Cow: Welp. This interaction has taught me that I hate ALL cats.
-    <<jump CowDrankNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowDrankNeg>>
 ===
 
 title: CatDrankNeg
+position: 3156,3051
 ---
 Cat: Right, like I’d trust anything you would serve me. You’d probably spit in it.
 Cow:...
 <<IncreaseBad ScoreTracker>>
 -> Cow: Here’s your cat-milk latte. Please enjoy.
-    <<jump CowDrankPos>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowDrankPos>>
 -> Cow: Welp. This interaction has taught me that I hate ALL cats.
-    <<jump CowDrankNeg>>
+ <<playContinue DialogueListViewSound>>
+ <<jump CowDrankNeg>>
 ===
 
 title: CowDrankPos
+position: 3760,3030
 ---
 Cow: Here’s your cat-milk latte. Please enjoy.
 Cat: ...
 <<IncreaseGood ScoreTracker>>
 
 -> Cat: Mmmh. Reminds me of childhood.
+ <<playContinue DialogueListViewSound>>
  <<CalculateScore ScoreTracker>>
 -> Cat: Welp. This interaction has taught me that I hate ALL cows.
-   <<CalculateScore ScoreTracker>>
+ <<playContinue DialogueListViewSound>>
+ <<CalculateScore ScoreTracker>>
 
 //if statement for going to good ending if good score higher than x
 //else statement go to bad score
@@ -330,15 +410,17 @@ Cat: ...
 ===
 
 title: CowDrankNeg
+position: 3567,3227
 ---
 Cow: Welp. This interaction has taught me that I hate ALL cats.
 Cat: ...
 <<IncreaseBad ScoreTracker>>
 
 -> Cat: Mmmh. Reminds me of childhood.
+ <<playContinue DialogueListViewSound>>
  <<CalculateScore ScoreTracker>>
 -> Cat: Welp. This interaction has taught me that I hate ALL cows.
-
+ <<playContinue DialogueListViewSound>>
 //To calculate the overall score:
 <<CalculateScore ScoreTracker>>
 
